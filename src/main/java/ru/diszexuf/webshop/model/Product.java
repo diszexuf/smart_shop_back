@@ -10,16 +10,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String model;
-
-    @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
-
-    private String description;
-
-    private int price;
+    private String title;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)

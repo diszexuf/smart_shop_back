@@ -1,8 +1,10 @@
 package ru.diszexuf.webshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.diszexuf.webshop.model.ClientOrder;
+import ru.diszexuf.webshop.model.Order;
 
-public interface IOrderRepository extends JpaRepository<ClientOrder, Long> {
+import java.util.List;
 
+public interface IOrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findByUserEmail(String userEmail);
 }

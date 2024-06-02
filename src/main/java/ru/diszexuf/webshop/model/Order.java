@@ -7,7 +7,8 @@ import java.util.List;
 
 @Data
 @Entity
-public class ClientOrder {
+@Table(name = "user_order")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,12 +16,9 @@ public class ClientOrder {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Client client;
+    private User user;
 
     @OneToMany
     private List<OrderItem> orderItems;
 
-//    private int cost = orderItems.stream()
-//            .mapToInt(item -> item.getCost() * item.getQuantity())
-//            .sum();
 }

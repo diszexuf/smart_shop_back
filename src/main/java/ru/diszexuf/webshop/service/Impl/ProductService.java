@@ -27,8 +27,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Product findByModel(String model) {
-        return productRepository.findByModel(model);
+    public Product findByModel(String title) {
+        return productRepository.findByTitle(title);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ProductService implements IProductService {
 
     @Override
     @Transactional
-    public void deleteProductByModel(String model) {
-        productRepository.deleteByModel(model);
+    public void deleteProductByModel(String title) {
+        productRepository.deleteByTitle(title);
     }
 }

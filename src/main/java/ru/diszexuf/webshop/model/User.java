@@ -7,7 +7,8 @@ import java.util.List;
 
 @Data
 @Entity
-public class Client {
+@Table(name = "usr")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +17,8 @@ public class Client {
     private String firstName;
     private String lastName;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClientOrder> orderList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orderList;
 
     @Column(unique=true)
     private String email;

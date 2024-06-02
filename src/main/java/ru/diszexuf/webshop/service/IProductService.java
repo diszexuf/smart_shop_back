@@ -8,7 +8,7 @@ public interface IProductService {
 
     List<Product> findAllProducts();
     Product saveProduct(Product product);
-    Product findByModel(String model);
+    Product findByModel(String title);
     Product updateProduct(Product product);
-    void deleteProductByModel(String model);
+    void deleteProductByModel(String title);
 }
