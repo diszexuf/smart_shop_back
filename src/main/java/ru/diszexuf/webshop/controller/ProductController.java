@@ -8,7 +8,12 @@ import ru.diszexuf.webshop.model.Product;
 import ru.diszexuf.webshop.service.IProductService;
 import ru.diszexuf.webshop.service.Impl.ProductSpecificationsService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -41,7 +46,35 @@ public class ProductController {
     }
 
     @GetMapping("/all_products")
-    public List<Product> findAllProducts() {
+    public List<Product> findAllProducts(
+        @RequestParam String categoryId,
+        @RequestParam Map<String, String> specifications
+    ) {
+        System.out.println("Category ID: " + categoryId);
+
+        Map<Integer, List<String>> specs = new HashMap<>();
+
+        specifications.forEach((key, value) -> {
+            if(!key.contains("specifications[")) {
+                return;
+            }
+
+            String regex = "\\[(\\d+)\\]\\[\\d+\\]";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(key);
+            if (matcher.find()) {
+                int extractedNumber = Integer.parseInt(matcher.group(1));
+                if (!specs.containsKey(extractedNumber)) {
+                    specs.put(extractedNumber, new ArrayList<>());
+                }
+                // Добавляем значение в список для данного ключа
+                specs.get(extractedNumber).add(value);
+                System.out.println("Extracted number: " + extractedNumber);
+            } else {
+                System.out.println("No match found");
+            }
+        });
+
         return productService.findAllProducts();
     }
 
