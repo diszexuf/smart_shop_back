@@ -48,34 +48,9 @@ public class ProductController {
     @GetMapping("/all_products")
     public List<Product> findAllProducts(
         @RequestParam String categoryId,
-        @RequestParam Map<String, String> specifications
+        @RequestParam Map<String, String> params
     ) {
-        System.out.println("Category ID: " + categoryId);
-
-        Map<Integer, List<String>> specs = new HashMap<>();
-
-        specifications.forEach((key, value) -> {
-            if(!key.contains("specifications[")) {
-                return;
-            }
-
-            String regex = "\\[(\\d+)\\]\\[\\d+\\]";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(key);
-            if (matcher.find()) {
-                int extractedNumber = Integer.parseInt(matcher.group(1));
-                if (!specs.containsKey(extractedNumber)) {
-                    specs.put(extractedNumber, new ArrayList<>());
-                }
-                // Добавляем значение в список для данного ключа
-                specs.get(extractedNumber).add(value);
-                System.out.println("Extracted number: " + extractedNumber);
-            } else {
-                System.out.println("No match found");
-            }
-        });
-
-        return productService.findAllProducts();
+        return productService.findAllProducts(categoryId, params);
     }
 
     @GetMapping("/filters")

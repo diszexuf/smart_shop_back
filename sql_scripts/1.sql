@@ -6,13 +6,13 @@ INSERT INTO public.category (id, title)
 VALUES (3, 'Аксессуары');
 
 INSERT INTO public.product (id, image, title, category_id)
-VALUES (1, 'asdasd', 'iphone xr', 1);
+VALUES (1, 'asdasd', 'Apple Iphone xr', 1);
 INSERT INTO public.product (id, image, title, category_id)
-VALUES (2, 'asdasd', 'iphone 11', 1);
+VALUES (2, 'asdasd', 'Xiaomi Mi 11', 1);
 INSERT INTO public.product (id, image, title, category_id)
-VALUES (3, 'asdasd', 'iphone 12', 1);
+VALUES (3, 'asdasd', 'Apple Iphone 12', 1);
 INSERT INTO public.product (id, image, title, category_id)
-VALUES (4, 'asdasd', 'iphone 13 Pro', 1);
+VALUES (4, 'asdasd', 'Apple Iphone 13 Pro', 1);
 
 INSERT INTO public.specifications (id, specification_type, title)
 VALUES (1, 'number', 'Оперативная память');
