@@ -19,10 +19,7 @@ public class SpecificationAggregationConverter {
         Long specificationsId = ((Number) dbData[0]).longValue();
         String title = (String) dbData[1];
         List<String> values = Arrays.asList((String[]) dbData[2]);
-        List<Long> productIds = Arrays.stream((Object[]) dbData[3])
-                .map(id -> ((Number) id).longValue())
-                .collect(Collectors.toList());
 
-        return new SpecificationAggregationDTO(specificationsId, title, values, productIds);
+        return new SpecificationAggregationDTO(specificationsId, title, values);
     }
 }
