@@ -2,6 +2,7 @@ package ru.diszexuf.webshop.service.Impl;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.diszexuf.webshop.model.Product;
@@ -17,8 +18,8 @@ import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
-@Primary
 public class ProductService implements IProductService {
+
     private final IProductRepository productRepository;
 
     @Override
@@ -49,7 +50,6 @@ public class ProductService implements IProductService {
         return productRepository.save(product);
     }
 
-    @Override
     public Product findByModel(String title) {
         return productRepository.findByTitle(title);
     }
