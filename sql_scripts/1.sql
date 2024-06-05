@@ -17,7 +17,7 @@ VALUES (4, 'asdasd', 'Apple Iphone 13 Pro', 1);
 INSERT INTO public.specifications (id, specification_type, title)
 VALUES (1, 'number', 'Оперативная память');
 INSERT INTO public.specifications (id, specification_type, title)
-VALUES (2, 'number', 'Внутрення память');
+VALUES (2, 'number', 'Внутренняя память');
 INSERT INTO public.specifications (id, specification_type, title)
 VALUES (3, 'string', 'Тип матрицы');
 INSERT INTO public.specifications (id, specification_type, title)

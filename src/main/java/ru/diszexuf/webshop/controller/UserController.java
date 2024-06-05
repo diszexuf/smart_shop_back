@@ -38,4 +38,9 @@ public class UserController {
     public List<User> findAllUsers() {
         return userService.findAllUsers();
     }
+
+//    @GetMapping("/user")
+//    public OAuth2User user(@AuthenticationPrincipal OAuth2User principal) {
+//        return principal;
+//    }
 }

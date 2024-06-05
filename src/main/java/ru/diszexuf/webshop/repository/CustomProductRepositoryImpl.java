@@ -1,6 +1,7 @@
 package ru.diszexuf.webshop.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Id;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
@@ -20,38 +21,36 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
     public List<Product> findAllProducts(String categoryId, Map<Integer, List<String>> specifications) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> query = cb.createQuery(Product.class);
-
-        Root<Product> productRoot = query.from(Product.class);
-        Join<Product, ProductSpecifications> psJoin = productRoot.join("product_pkey", JoinType.INNER);
-
-        query.select(productRoot)
-                .distinct(true);
+        Root<Product> product = query.from(Product.class);
 
         List<Predicate> predicates = new ArrayList<>();
-        predicates.add(cb.equal(productRoot.get("category").get("id"), 1));
 
-        for (Map.Entry<Integer, List<String>> entry : specifications.entrySet()) {
-            Integer specificationId = entry.getKey();
-            List<String> values = entry.getValue();
-
-            Expression<Integer> specificationIdExpression = cb.literal(specificationId);
-            Path<String> valuePath = psJoin.get("value");
-            Path<Integer> specificationIdPath = psJoin.get("specifications_id");
-
-            List<Predicate> orPredicates = new ArrayList<>();
-            for (String value : values) {
-                Expression<String> valueExpression = cb.literal(value);
-                Predicate specificationPredicate = cb.and(
-                        cb.equal(specificationIdPath, specificationIdExpression),
-                        cb.equal(valuePath, valueExpression)
-                );
-                orPredicates.add(specificationPredicate);
-            }
-
-            predicates.add(cb.or(orPredicates.toArray(new Predicate[0])));
+        if (categoryId != null) {
+            predicates.add(cb.equal(product.get("category").get("id"), categoryId));
         }
 
-        query.where(predicates.toArray(new Predicate[0]));
+        if (specifications != null && !specifications.isEmpty()) {
+            List<Predicate> subqueryPredicates = new ArrayList<>();
+
+            for (Map.Entry<Integer, List<String>> entry : specifications.entrySet()) {
+                Integer specId = entry.getKey();
+                List<String> values = entry.getValue();
+
+                Subquery<Long> subquery = query.subquery(Long.class);
+                Root<ProductSpecifications> productSpec = subquery.from(ProductSpecifications.class);
+                subquery.select(productSpec.get("product").get("id"))
+                        .where(cb.and(
+                                cb.equal(productSpec.get("specifications").get("id"), specId),
+                                productSpec.get("value").in(values)
+                        ));
+
+                subqueryPredicates.add(cb.in(product.get("id")).value(subquery));
+            }
+
+            predicates.add(cb.or(subqueryPredicates.toArray(new Predicate[0])));
+        }
+
+        query.select(product).distinct(true).where(predicates.toArray(new Predicate[0]));
 
         return entityManager.createQuery(query).getResultList();
     }
