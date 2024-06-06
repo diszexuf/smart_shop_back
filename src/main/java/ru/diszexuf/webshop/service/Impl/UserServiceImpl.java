@@ -3,18 +3,24 @@ package ru.diszexuf.webshop.service.Impl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.diszexuf.webshop.model.User;
 import ru.diszexuf.webshop.repository.IUserRepository;
-import ru.diszexuf.webshop.service.IUserService;
+import ru.diszexuf.webshop.service.UserService;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 @Primary
-public class UserService implements IUserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final IUserRepository userRepository;
+
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> findAllUsers() {
@@ -40,5 +46,15 @@ public class UserService implements IUserService {
     @Transactional
     public void deleteUser(String email) {
         userRepository.deleteUserByEmail(email);
+    }
+
+
+    // UserDetailService impl
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        System.out.println("In the userDetailsService");
+
+        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user isn't valid"));
     }
 }

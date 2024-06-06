@@ -3,7 +3,7 @@ package ru.diszexuf.webshop.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.diszexuf.webshop.model.User;
-import ru.diszexuf.webshop.service.IUserService;
+import ru.diszexuf.webshop.service.UserService;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
 
-    private final IUserService userService;
+    private final UserService userService;
 
     @PostMapping("save_user")
     public User saveUser(@RequestBody User user) {
@@ -39,8 +39,8 @@ public class UserController {
         return userService.findAllUsers();
     }
 
-//    @GetMapping("/user")
-//    public OAuth2User user(@AuthenticationPrincipal OAuth2User principal) {
-//        return principal;
-//    }
+    @GetMapping("/")
+    public String helloUserController() {
+        return "Userr accses level";
+    }
 }

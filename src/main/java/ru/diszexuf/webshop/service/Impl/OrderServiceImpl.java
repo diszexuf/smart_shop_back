@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.diszexuf.webshop.model.Order;
 import ru.diszexuf.webshop.repository.IOrderRepository;
-import ru.diszexuf.webshop.service.IOrderService;
+import ru.diszexuf.webshop.service.OrderService;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class OrderService implements IOrderService {
+public class OrderServiceImpl implements OrderService {
     private final IOrderRepository orderRepository;
 
     @Override

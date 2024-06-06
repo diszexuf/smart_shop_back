@@ -3,7 +3,7 @@ package ru.diszexuf.webshop.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.diszexuf.webshop.model.Order;
-import ru.diszexuf.webshop.service.IOrderService;
+import ru.diszexuf.webshop.service.OrderService;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api/v1/orders")
 @AllArgsConstructor
 public class OrderController {
-    private final IOrderService orderService;
+    private final OrderService orderService;
 
     @GetMapping("/all_orders")
     public List<Order> findAllOrders() {

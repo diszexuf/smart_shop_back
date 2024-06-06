@@ -5,7 +5,7 @@ import ru.diszexuf.webshop.model.Order;
 
 import java.util.List;
 
-public interface IOrderService {
+public interface OrderService {
     List<Order> findAllOrders();
     Order saveOrder(Order order);
     List<Order> findByUserEmail(String userEmail);

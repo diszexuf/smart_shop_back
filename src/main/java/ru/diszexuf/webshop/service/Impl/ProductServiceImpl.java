@@ -2,12 +2,10 @@ package ru.diszexuf.webshop.service.Impl;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.diszexuf.webshop.model.Product;
 import ru.diszexuf.webshop.repository.IProductRepository;
-import ru.diszexuf.webshop.service.IProductService;
+import ru.diszexuf.webshop.service.ProductService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +16,7 @@ import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
-public class ProductService implements IProductService {
+public class ProductServiceImpl implements ProductService {
 
     private final IProductRepository productRepository;
 

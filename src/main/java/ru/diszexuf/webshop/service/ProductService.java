@@ -5,7 +5,7 @@ import ru.diszexuf.webshop.model.Product;
 import java.util.List;
 import java.util.Map;
 
-public interface IProductService {
+public interface ProductService {
 
     List<Product> findAllProducts(String categoryId, Map<String, String> params);
     Product saveProduct(Product product);
