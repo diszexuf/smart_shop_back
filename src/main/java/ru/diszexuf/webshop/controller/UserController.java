@@ -6,6 +6,7 @@ import ru.diszexuf.webshop.model.User;
 import ru.diszexuf.webshop.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -19,17 +20,17 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/{email}")
-    public User findByName(@PathVariable String email) {
-        return userService.findUserByEmail(email);
+    @GetMapping("/find_{username}")
+    public Optional<User> findByName(@PathVariable String username) {
+        return userService.findUserByUsername(username);
     }
 
-    @PutMapping("update_user")
+    @PutMapping("/update_user")
     public User updateUser(User user) {
         return userService.updateUser(user);
     }
 
-    @DeleteMapping("delete_user/{email}")
+    @DeleteMapping("/delete_user/{email}")
     public void deleteUser(@PathVariable String email) {
         userService.deleteUser(email);
     }
@@ -39,8 +40,4 @@ public class UserController {
         return userService.findAllUsers();
     }
 
-    @GetMapping("/")
-    public String helloUserController() {
-        return "Userr accses level";
-    }
 }

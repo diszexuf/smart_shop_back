@@ -3,6 +3,7 @@ package ru.diszexuf.webshop.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.diszexuf.webshop.model.Order;
+import ru.diszexuf.webshop.model.User;
 import ru.diszexuf.webshop.service.OrderService;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public class OrderController {
         return orderService.saveOrder(order);
     }
 
-    @GetMapping("/{userEmail}_orders")
-    public List<Order> findByUserEmail(@PathVariable String userEmail) {
-        return orderService.findByUserEmail(userEmail);
+    @GetMapping("/{user}_orders")
+    public List<Order> findByUser(@PathVariable User user) {
+        return orderService.findByUser(user);
     }
 
     @PutMapping

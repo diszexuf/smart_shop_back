@@ -58,8 +58,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**", "/api/v1/products/filters", "/api/v1/products/all_products").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN");
+                    auth.requestMatchers("/admin/**", "/user/**").hasRole("ADMIN");
+                    auth.requestMatchers("/user/**").hasAnyRole("USER"); //todo пересмотреть доступы
                     auth.anyRequest().authenticated();
                 });
         http.oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));

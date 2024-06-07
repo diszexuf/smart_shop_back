@@ -3,6 +3,7 @@ package ru.diszexuf.webshop.service.Impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.diszexuf.webshop.model.Order;
+import ru.diszexuf.webshop.model.User;
 import ru.diszexuf.webshop.repository.IOrderRepository;
 import ru.diszexuf.webshop.service.OrderService;
 
@@ -24,8 +25,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByUserEmail(String userEmail) {
-        return orderRepository.findByUserEmail(userEmail);
+    public List<Order> findByUser(User user) {
+        return orderRepository.findByUser(user);
     }
 
     @Override

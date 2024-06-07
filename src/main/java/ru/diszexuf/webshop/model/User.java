@@ -44,6 +44,8 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
+    private String fullName;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role_junction",
@@ -70,5 +72,7 @@ public class User implements UserDetails {
 
     @Column(unique=true)
     private String email;
+
+    private String phone;
 
 }
