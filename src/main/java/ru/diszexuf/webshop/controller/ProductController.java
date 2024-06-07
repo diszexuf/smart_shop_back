@@ -44,9 +44,11 @@ public class ProductController {
     @GetMapping("/all_products")
     public List<Product> findAllProducts(
         @RequestParam String categoryId,
-        @RequestParam Map<String, String> params
+        @RequestParam Map<String, String> params,
+        @RequestParam String minPrice,
+        @RequestParam String maxPrice
     ) {
-        return productService.findAllProducts(categoryId, params);
+        return productService.findAllProducts(categoryId, params, minPrice, maxPrice);
     }
 
     @GetMapping("/filters")

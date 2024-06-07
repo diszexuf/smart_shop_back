@@ -18,7 +18,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<Product> findAllProducts(String categoryId, Map<Integer, List<String>> specifications) {
+    public List<Product> findAllProducts(String categoryId, Map<Integer, List<String>> specifications, String minPrice, String maxPrice) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> query = cb.createQuery(Product.class);
         Root<Product> product = query.from(Product.class);
@@ -48,6 +48,17 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
             }
 
             predicates.add(cb.or(subqueryPredicates.toArray(new Predicate[0])));
+        }
+
+        if (minPrice != null && !minPrice.isEmpty()) {
+            double min = Double.parseDouble(minPrice);
+            predicates.add(cb.greaterThanOrEqualTo(product.get("price"), min));
+
+        }
+
+        if (maxPrice != null && !maxPrice.isEmpty()) {
+            double max = Double.parseDouble(maxPrice);
+            predicates.add(cb.lessThanOrEqualTo(product.get("price"), max));
         }
 
         query.select(product).distinct(true).where(predicates.toArray(new Predicate[0]));

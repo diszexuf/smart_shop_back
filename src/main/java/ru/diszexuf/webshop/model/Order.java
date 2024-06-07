@@ -3,6 +3,7 @@ package ru.diszexuf.webshop.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -17,6 +18,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(nullable = false)
     private User user;
+
+    private String orderDate;
 
     @OneToMany
     private List<OrderItem> orderItems;

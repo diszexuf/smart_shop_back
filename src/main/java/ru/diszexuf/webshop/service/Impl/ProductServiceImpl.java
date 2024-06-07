@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     private final IProductRepository productRepository;
 
     @Override
-    public List<Product> findAllProducts(String categoryId, Map<String, String> params) {
+    public List<Product> findAllProducts(String categoryId, Map<String, String> params, String minPrice, String maxPrice) {
         Map<Integer, List<String>> specifications = new HashMap<>();
 
         params.forEach((key, value) -> {
@@ -40,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
             }
         });
 
-        return productRepository.findAllProducts(categoryId, specifications);
+        return productRepository.findAllProducts(categoryId, specifications, minPrice, maxPrice);
     }
 
     @Override
