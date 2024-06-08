@@ -24,6 +24,6 @@ public class AuhenticationController {
 
     @PostMapping("/login")
     public LoginResponseDTO loginUser(@RequestBody RegistrationDTO body) {
-        return  authenticationService.loginUser(body.getUsername(), body.getPassword());
+        return authenticationService.loginUser(body.getUsername(), body.getPassword());
     }
 }
