@@ -57,8 +57,10 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**", "/api/v1/products/filters", "/api/v1/products/all_products").permitAll();
-                    auth.requestMatchers("/admin/**", "/user/**").hasRole("ADMIN");
+                    auth.requestMatchers("/**").permitAll();
+//                    auth.requestMatchers("/auth/**", "/api/v1/products/filters", "/api/v1/products/all_products").permitAll();
+                    // todo ограничить доступ к функциям админа
+//                    auth.requestMatchers("/admin/**", "/user/**").hasRole("ADMIN");
                     auth.requestMatchers("/user/**").hasAnyRole("USER"); //todo пересмотреть доступы
                     auth.anyRequest().authenticated();
                 });

@@ -18,7 +18,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @Autowired
     private ProductSpecificationsService productSpecificationsService;
 
     @PostMapping("/save_product")
