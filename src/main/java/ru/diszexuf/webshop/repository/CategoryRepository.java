@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.diszexuf.webshop.model.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-//    Category saveCategory(Category category);
+    void deleteCategoryById(Long id);
 }

@@ -20,15 +20,19 @@ public class CategoryController {
     }
 
     @PostMapping("/save_category")
-    public Category saveCategory(Category category) {
+    public Category saveCategory(@RequestBody Category category) {
         return categoryService.saveCategory(category);
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
         Category updatedCategory = categoryService.updateCategory(id, category);
         return ResponseEntity.ok(updatedCategory);
+    }
+
+    @DeleteMapping("/delete_{id}")
+    public void deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategoryById(id);
     }
 
 }

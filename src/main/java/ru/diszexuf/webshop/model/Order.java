@@ -21,6 +21,9 @@ public class Order {
 
     private String orderDate;
 
+    //todo чекнуть запросы
+    private String orderStatus;
+
     @OneToMany
     private List<OrderItem> orderItems;
 

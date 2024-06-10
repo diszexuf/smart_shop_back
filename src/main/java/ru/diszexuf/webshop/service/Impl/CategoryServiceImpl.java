@@ -36,4 +36,9 @@ public class CategoryServiceImpl implements CategoryService {
             throw new ResourceNotFoundException("Category not found with id " + id);
         }
     }
+
+    @Override
+    public void deleteCategoryById(Long id) {
+        categoryRepository.deleteById(id);
+    }
 }
