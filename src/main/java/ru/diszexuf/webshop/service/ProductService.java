@@ -1,5 +1,6 @@
 package ru.diszexuf.webshop.service;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.diszexuf.webshop.model.Product;
 
 import java.util.List;
@@ -11,4 +12,5 @@ public interface ProductService {
     Product findByModel(String title);
     Product updateProduct(Product product);
     void deleteProductByModel(String title);
+    Map<String, String> getSpecificationOfProduct(Long productId);
 }

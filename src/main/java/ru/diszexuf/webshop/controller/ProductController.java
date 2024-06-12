@@ -31,7 +31,7 @@ public class ProductController {
     }
 
     @PutMapping("/update_product")
-    public Product updateProduct(Product product) {
+    public Product updateProduct(@RequestBody Product product) {
         return productService.updateProduct(product);
     }
 
@@ -48,6 +48,11 @@ public class ProductController {
         @RequestParam String maxPrice
     ) {
         return productService.findAllProducts(categoryId, params, minPrice, maxPrice);
+    }
+
+    @GetMapping("/specs_{productId}")
+    public Map<String, String> getSpecificationOfProduct(@PathVariable Long productId) {
+        return productService.getSpecificationOfProduct(productId);
     }
 
     @GetMapping("/filters")

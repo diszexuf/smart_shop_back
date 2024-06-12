@@ -62,4 +62,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductByModel(String title) {
         productRepository.deleteByTitle(title);
     }
+
+    @Override
+    public Map<String, String> getSpecificationOfProduct(Long productId) {
+        return productRepository.getSpecificationOfProduct(productId);
+    }
 }

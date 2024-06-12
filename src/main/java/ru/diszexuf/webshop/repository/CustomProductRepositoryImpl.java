@@ -7,8 +7,10 @@ import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
 import ru.diszexuf.webshop.model.Product;
 import ru.diszexuf.webshop.model.ProductSpecifications;
+import ru.diszexuf.webshop.model.Specifications;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +66,29 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         query.select(product).distinct(true).where(predicates.toArray(new Predicate[0]));
 
         return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
+    public Map<String, String> getSpecificationOfProduct(Long productId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+
+        Root<ProductSpecifications> productSpecRoot = cq.from(ProductSpecifications.class);
+        Join<ProductSpecifications, Specifications> specificationsJoin = productSpecRoot.join("specifications");
+
+        cq.multiselect(specificationsJoin.get("title"), productSpecRoot.get("value"))
+                .where(cb.equal(productSpecRoot.get("product").get("id"), productId));
+
+        List<Object[]> results = entityManager.createQuery(cq).getResultList();
+
+        Map<String, String> specificationsMap = new HashMap<>();
+        for (Object[] result : results) {
+            String title = (String) result[0];
+            String value = (String) result[1];
+            specificationsMap.put(title, value);
+        }
+
+        return specificationsMap;
     }
 
 

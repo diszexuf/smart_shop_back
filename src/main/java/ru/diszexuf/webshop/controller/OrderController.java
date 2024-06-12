@@ -30,7 +30,7 @@ public class OrderController {
     }
 
     @PutMapping
-    public Order updateOrder(Order order) {
+    public Order updateOrder(@RequestBody Order order) {
         return orderService.updateOrder(order);
     }
 

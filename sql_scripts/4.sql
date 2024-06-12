@@ -9,7 +9,7 @@ VALUES ('Аксессуары');
 INSERT INTO public.specifications (id, specification_type, title)
 VALUES
     (1, 'number', 'Оперативная память'),
-    (2, 'number', 'Внутрення память'),
+    (2, 'number', 'Внутренняя память'),
     (3, 'string', 'Тип матрицы'),
     (4, 'string', 'Бренд'),
     (5, 'string', 'Тип конструкции'),

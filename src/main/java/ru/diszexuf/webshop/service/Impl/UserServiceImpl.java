@@ -40,7 +40,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User updateUser(User user) {
-        return userRepository.save(user);
+        User editUser = userRepository.findByUsername(user.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + user.getUsername()));
+        editUser.setFullName(user.getFullName());
+        editUser.setPhone(user.getPhone());
+        editUser.setEmail(user.getEmail());
+
+        return userRepository.save(editUser);
     }
 
     @Override
