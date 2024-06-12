@@ -4,6 +4,8 @@ INSERT INTO public.category (title)
 VALUES ('Наушники');
 INSERT INTO public.category (title)
 VALUES ('Аксессуары');
+INSERT INTO public.category (title)
+VALUES ('Умные часы');
 
 -- Добавление характеристик
 INSERT INTO public.specifications (id, specification_type, title)

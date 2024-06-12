@@ -2,6 +2,7 @@ package ru.diszexuf.webshop.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.diszexuf.webshop.dto.OrderDTO;
 import ru.diszexuf.webshop.model.Order;
 import ru.diszexuf.webshop.model.User;
 import ru.diszexuf.webshop.service.OrderService;
@@ -19,8 +20,8 @@ public class OrderController {
         return orderService.findAllOrders();
     }
 
-    @PostMapping("save_order")
-    public Order saveOrder(@RequestBody Order order) {
+    @PostMapping("/save_order")
+    public Order saveOrder(@RequestBody OrderDTO order) {
         return orderService.saveOrder(order);
     }
 
@@ -34,7 +35,7 @@ public class OrderController {
         return orderService.updateOrder(order);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/delete_order")
     public void deleteOrder(Order order) {
         orderService.deleteOrder(order);
     }

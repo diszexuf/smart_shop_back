@@ -2,26 +2,57 @@ package ru.diszexuf.webshop.service.Impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.diszexuf.webshop.dto.OrderDTO;
+import ru.diszexuf.webshop.dto.OrderItemDTO;
 import ru.diszexuf.webshop.model.Order;
+import ru.diszexuf.webshop.model.OrderItem;
+import ru.diszexuf.webshop.model.Product;
 import ru.diszexuf.webshop.model.User;
 import ru.diszexuf.webshop.repository.IOrderRepository;
+import ru.diszexuf.webshop.repository.IProductRepository;
+import ru.diszexuf.webshop.repository.IUserRepository;
 import ru.diszexuf.webshop.service.OrderService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final IOrderRepository orderRepository;
+    private final IUserRepository userRepository;
+    private final IProductRepository productRepository;
 
     @Override
     public List<Order> findAllOrders() {
         return orderRepository.findAll();
     }
-
     @Override
-    public Order saveOrder(Order order) {
-        return orderRepository.save(order);
+    public Order saveOrder(OrderDTO order) {
+        Order orderAdd = new Order();
+        orderAdd.setOrderDate(order.getOrderDate());
+        User user = userRepository.findById(order.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+        orderAdd.setUser(user);
+
+        // Создаем список для товаров в заказе
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        // Перебираем товары из DTO и создаем для них соответствующие сущности OrderItem
+        for (OrderItemDTO item : order.getOrderItems()) {
+            Product product = productRepository.findById(item.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProductId(product.getId());
+            orderItem.setQuantity(item.getQuantity());
+            orderItem.setOrder(orderAdd); // устанавливаем связь с заказом
+            orderItems.add(orderItem); // добавляем товар в список
+        }
+
+        // Устанавливаем для заказа список товаров
+        orderAdd.setOrderItems(orderItems);
+
+        // Сохраняем заказ вместе с товарами
+        return orderRepository.save(orderAdd);
     }
 
     @Override
