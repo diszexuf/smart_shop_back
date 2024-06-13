@@ -1,9 +1,13 @@
 package ru.diszexuf.webshop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.security.core.GrantedAuthority;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -17,6 +21,10 @@ public class Role implements GrantedAuthority {
 
     @NonNull
     private String authority;
+
+    @ManyToMany(mappedBy = "authorities")
+    @JsonBackReference
+    private Set<User> users = new HashSet<>();
 
     public Role() {
         super();

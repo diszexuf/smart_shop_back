@@ -32,32 +32,30 @@ public class OrderServiceImpl implements OrderService {
     public Order saveOrder(OrderDTO order) {
         Order orderAdd = new Order();
         orderAdd.setOrderDate(order.getOrderDate());
+        orderAdd.setOrderStatus(order.getOrderStatus());
         User user = userRepository.findById(order.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
         orderAdd.setUser(user);
 
-        // Создаем список для товаров в заказе
         List<OrderItem> orderItems = new ArrayList<>();
 
-        // Перебираем товары из DTO и создаем для них соответствующие сущности OrderItem
         for (OrderItemDTO item : order.getOrderItems()) {
             Product product = productRepository.findById(item.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
             OrderItem orderItem = new OrderItem();
             orderItem.setProductId(product.getId());
             orderItem.setQuantity(item.getQuantity());
-            orderItem.setOrder(orderAdd); // устанавливаем связь с заказом
-            orderItems.add(orderItem); // добавляем товар в список
+            orderItem.setOrder(orderAdd);
+            orderItems.add(orderItem);
         }
 
-        // Устанавливаем для заказа список товаров
         orderAdd.setOrderItems(orderItems);
 
-        // Сохраняем заказ вместе с товарами
         return orderRepository.save(orderAdd);
     }
 
     @Override
-    public List<Order> findByUser(User user) {
-        return orderRepository.findByUser(user);
+    public List<Order> findByUser(String user) {
+        User user1 = userRepository.findByUsername(user).orElseThrow(() -> new RuntimeException("User not found"));
+        return orderRepository.findByUser(user1);
     }
 
     @Override

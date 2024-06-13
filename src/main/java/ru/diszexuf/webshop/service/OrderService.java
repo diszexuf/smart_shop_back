@@ -10,7 +10,7 @@ import java.util.List;
 public interface OrderService {
     List<Order> findAllOrders();
     Order saveOrder(OrderDTO order);
-    List<Order> findByUser(User user);
+    List<Order> findByUser(String username);
     Order updateOrder(Order order);
     void deleteOrder(Order order);
 }

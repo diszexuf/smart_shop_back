@@ -25,9 +25,9 @@ public class OrderController {
         return orderService.saveOrder(order);
     }
 
-    @GetMapping("/{user}_orders")
-    public List<Order> findByUser(@PathVariable User user) {
-        return orderService.findByUser(user);
+    @GetMapping("/{username}")
+    public List<Order> findByUser(@PathVariable String username) {
+        return orderService.findByUser(username);
     }
 
     @PutMapping
