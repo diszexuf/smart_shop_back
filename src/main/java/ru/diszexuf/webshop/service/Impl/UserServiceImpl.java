@@ -55,13 +55,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.deleteUserByEmail(email);
     }
 
-
-    // UserDetailService impl
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        System.out.println("In the userDetailsService");
-
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user isn't valid"));
     }
 }
