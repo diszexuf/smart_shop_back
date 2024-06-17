@@ -10,5 +10,5 @@ public interface UserService {
     User saveUser(User user);
     Optional<User> findUserByUsername(String username);
     User updateUser(User user);
-    void deleteUser(String email);
+//    void deleteUser(String email);
 }

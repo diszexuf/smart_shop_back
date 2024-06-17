@@ -1,6 +1,7 @@
 package ru.diszexuf.webshop.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.diszexuf.webshop.model.User;
 import ru.diszexuf.webshop.service.UserService;
@@ -25,15 +26,15 @@ public class UserController {
         return userService.findUserByUsername(username);
     }
 
-    @PutMapping("/update_user")
+    @PutMapping(value = "/update_user", consumes = MediaType.APPLICATION_JSON_VALUE)
     public User updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
 
-    @DeleteMapping("/delete_user/{email}")
-    public void deleteUser(@PathVariable String email) {
-        userService.deleteUser(email);
-    }
+//    @DeleteMapping("/delete_user/{email}")
+//    public void deleteUser(@PathVariable String email) {
+//        userService.deleteUser(email);
+//    }
 
     @GetMapping("/all")
     public List<User> findAllUsers() {

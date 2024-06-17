@@ -54,7 +54,6 @@ public class User implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
-    @JsonManagedReference
     private Set<Role> authorities;
 
     public User() {

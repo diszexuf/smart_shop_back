@@ -21,11 +21,13 @@ public class Order {
     @JsonBackReference
     private User user;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<OrderItem> orderItems;
+
     private String orderDate;
     private String orderStatus;
     private Integer cost;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<OrderItem> orderItems;
+
 }
