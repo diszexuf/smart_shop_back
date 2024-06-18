@@ -94,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
             }
 
             Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            return path.toString();
+            return "/uploads/" + fileName;
         } catch (IOException e) {
             throw new RuntimeException("Ошибка при сохранении файла", e);
         }
