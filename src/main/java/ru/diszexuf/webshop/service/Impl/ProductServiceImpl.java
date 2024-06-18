@@ -3,10 +3,21 @@ package ru.diszexuf.webshop.service.Impl;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.diszexuf.webshop.model.Product;
+import ru.diszexuf.webshop.model.ProductSpecifications;
+import ru.diszexuf.webshop.model.Specifications;
+import ru.diszexuf.webshop.repository.CategoryRepository;
 import ru.diszexuf.webshop.repository.IProductRepository;
+import ru.diszexuf.webshop.repository.IProductSpecificationsRepository;
+import ru.diszexuf.webshop.repository.SpecificationsRepository;
 import ru.diszexuf.webshop.service.ProductService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +30,9 @@ import java.util.regex.Pattern;
 public class ProductServiceImpl implements ProductService {
 
     private final IProductRepository productRepository;
+    private final SpecificationsRepository specificationsRepository;
+    private final IProductSpecificationsRepository productSpecificationsRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<Product> findAllProducts(String categoryId, Map<String, String> params, String minPrice, String maxPrice) {
@@ -44,8 +58,46 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public Product saveProduct(Product product, Map<String, String> specs, MultipartFile image, Long categoryId) {
+
+        String imagePath = saveImage(image);
+        product.setImage(imagePath);
+        product.setCategory(categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("User not found")));
+
+        Product savedProduct = productRepository.save(product);
+
+        for (Map.Entry<String, String> spec : specs.entrySet()) {
+            if (specificationsRepository.findByTitle(spec.getKey()) == null ) {
+                Specifications newSpec = new Specifications();
+                newSpec.setTitle(spec.getKey());
+                specificationsRepository.save(newSpec);
+            }
+            ProductSpecifications productSpecifications = new ProductSpecifications();
+            productSpecifications.setProduct(savedProduct);
+            productSpecifications.setSpecifications(specificationsRepository.findByTitle(spec.getKey()));
+            productSpecifications.setValue(spec.getValue());
+
+            productSpecificationsRepository.save(productSpecifications);
+        }
+
+        return savedProduct;
+    }
+
+    private String saveImage(MultipartFile image) {
+        try {
+            String uploadDir = System.getProperty("user.dir") + "/uploads/";
+            String fileName = image.getOriginalFilename();
+            Path path = Paths.get(uploadDir + fileName);
+
+            if (!Files.exists(path.getParent())) {
+                Files.createDirectories(path.getParent());
+            }
+
+            Files.copy(image.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            return path.toString();
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при сохранении файла", e);
+        }
     }
 
     public Product findByModel(String title) {

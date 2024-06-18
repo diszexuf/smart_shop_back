@@ -16,8 +16,6 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = true)
     private Category category;
 
-
-    // todo посмотреть как хранить пикчи
     private String image;
 
     private Integer price;

@@ -31,11 +31,6 @@ public class UserController {
         return userService.updateUser(user);
     }
 
-//    @DeleteMapping("/delete_user/{email}")
-//    public void deleteUser(@PathVariable String email) {
-//        userService.deleteUser(email);
-//    }
-
     @GetMapping("/all")
     public List<User> findAllUsers() {
         return userService.findAllUsers();

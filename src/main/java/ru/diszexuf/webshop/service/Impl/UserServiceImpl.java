@@ -49,12 +49,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(editUser);
     }
 
-//    @Override
-//    @Transactional
-//    public void deleteUser(String email) {
-//        userRepository.deleteUserByEmail(email);
-//    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user isn't valid"));

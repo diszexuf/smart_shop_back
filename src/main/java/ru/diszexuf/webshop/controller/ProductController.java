@@ -2,12 +2,21 @@ package ru.diszexuf.webshop.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.diszexuf.webshop.dto.SpecificationAggregationDTO;
 import ru.diszexuf.webshop.model.Product;
+import ru.diszexuf.webshop.model.ProductSpecifications;
 import ru.diszexuf.webshop.service.ProductService;
 import ru.diszexuf.webshop.service.Impl.ProductSpecificationsService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +30,12 @@ public class ProductController {
     private ProductSpecificationsService productSpecificationsService;
 
     @PostMapping("/save_product")
-    public Product saveProduct(@RequestBody Product product) {
-        return productService.saveProduct(product);
+    public ResponseEntity<Product> saveProduct(@RequestPart("product") Product product,
+                                               @RequestPart("specs") Map<String, String> specs,
+                                               @RequestPart("image") MultipartFile image,
+                                               @RequestParam("categoryId") Long categoryId) {
+        Product savedProduct = productService.saveProduct(product, specs, image, categoryId);
+        return ResponseEntity.ok(savedProduct);
     }
 
     @GetMapping("/{title}")

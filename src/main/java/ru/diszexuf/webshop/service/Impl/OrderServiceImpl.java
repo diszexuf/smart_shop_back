@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         for (OrderItemDTO item : order.getOrderItems()) {
             Product product = productRepository.findById(item.getProductId()).orElseThrow(() -> new RuntimeException("Product not found"));
             OrderItem orderItem = new OrderItem();
-            orderItem.setProductId(product.getId());
+            orderItem.setProduct(product);
             orderItem.setQuantity(item.getQuantity());
             orderItem.setOrder(orderAdd);
             orderItems.add(orderItem);
