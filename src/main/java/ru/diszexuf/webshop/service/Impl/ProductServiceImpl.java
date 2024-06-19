@@ -59,7 +59,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveProduct(Product product, Map<String, String> specs, MultipartFile image, Long categoryId) {
-
         String imagePath = saveImage(image);
         product.setImage(imagePath);
         product.setCategory(categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("User not found")));
@@ -100,12 +99,19 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    public Product findByModel(String title) {
+    public Product findByTitle(String title) {
         return productRepository.findByTitle(title);
     }
 
     @Override
+    public Product findById(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+
+    @Override
     public Product updateProduct(Product product) {
+
         return productRepository.save(product);
     }
 

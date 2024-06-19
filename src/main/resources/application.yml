@@ -6,8 +6,6 @@ logging:
 
 
 spring:
-  profiles:
-    active: client_secret
   application:
     name: webshop
 
