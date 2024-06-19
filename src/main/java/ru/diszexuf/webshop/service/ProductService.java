@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ProductService {
     List<Product> findAllProducts(String categoryId, Map<String, String> params, String minPrice, String maxPrice);
-    Product saveProduct(Product product, Map<String, String> specs, MultipartFile image, Long categoryId);
+    Product saveProduct(Product product, Map<String, String> specs, MultipartFile image, Long categoryId, Long id);
     Product findByTitle(String title);
     Product findById(Long id);
     Product updateProduct(Product product);

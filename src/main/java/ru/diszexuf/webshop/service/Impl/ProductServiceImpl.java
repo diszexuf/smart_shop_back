@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
         Map<Integer, List<String>> specifications = new HashMap<>();
 
         params.forEach((key, value) -> {
-            if(!key.contains("specifications[")) {
+            if (!key.contains("specifications[")) {
                 return;
             }
             String regex = "\\[(\\d+)\\]\\[\\d+\\]";
@@ -58,15 +58,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product saveProduct(Product product, Map<String, String> specs, MultipartFile image, Long categoryId) {
-        String imagePath = saveImage(image);
-        product.setImage(imagePath);
-        product.setCategory(categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("User not found")));
+    public Product saveProduct(Product product, Map<String, String> specs, MultipartFile image, Long categoryId, Long id) {
+        if (id != null) {
+            product.setId(id);
+            product.setImage(productRepository.findById(id).get().getImage());
 
+        }
+
+        if (image != null) {
+            String imagePath = saveImage(image);
+            product.setImage(imagePath);
+        }
+
+        product.setCategory(categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("User not found")));
         Product savedProduct = productRepository.save(product);
 
         for (Map.Entry<String, String> spec : specs.entrySet()) {
-            if (specificationsRepository.findByTitle(spec.getKey()) == null ) {
+            if (specificationsRepository.findByTitle(spec.getKey()) == null) {
                 Specifications newSpec = new Specifications();
                 newSpec.setTitle(spec.getKey());
                 specificationsRepository.save(newSpec);

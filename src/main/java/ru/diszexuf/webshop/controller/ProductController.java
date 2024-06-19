@@ -24,9 +24,10 @@ public class ProductController {
     @PostMapping("/save_product")
     public ResponseEntity<Product> saveProduct(@RequestPart("product") Product product,
                                                @RequestPart("specs") Map<String, String> specs,
-                                               @RequestPart("image") MultipartFile image,
-                                               @RequestParam("categoryId") Long categoryId) {
-        Product savedProduct = productService.saveProduct(product, specs, image, categoryId);
+                                               @RequestPart(value="image", required = false) MultipartFile image,
+                                               @RequestParam("categoryId") Long categoryId,
+                                               @RequestParam(value = "id", required = false) Long id) {
+        Product savedProduct = productService.saveProduct(product, specs, image, categoryId, id);
         return ResponseEntity.ok(savedProduct);
     }
 
