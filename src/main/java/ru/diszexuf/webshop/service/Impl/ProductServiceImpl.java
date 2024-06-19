@@ -111,9 +111,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void deleteProductByModel(String title) {
-        productRepository.deleteByTitle(title);
+    public void deleteProductById(Long productId) {
+        productSpecificationsRepository.deleteProductSpecificationsByproductId(productId);
+        productRepository.deleteById(productId);
     }
+
 
     @Override
     public Map<String, String> getSpecificationOfProduct(Long productId) {

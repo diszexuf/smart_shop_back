@@ -21,6 +21,7 @@ public interface IProductSpecificationsRepository extends JpaRepository<ProductS
             nativeQuery = true)
     List<Object[]> findSpecificationsAggregationByCategoryId(@Param("categoryId") Long categoryId);
 
+    void deleteProductSpecificationsByproductId(@Param("productId") Long productId);
 }
 
 

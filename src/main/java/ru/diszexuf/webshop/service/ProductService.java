@@ -13,6 +13,6 @@ public interface ProductService {
     Product saveProduct(Product product, Map<String, String> specs, MultipartFile image, Long categoryId);
     Product findByModel(String title);
     Product updateProduct(Product product);
-    void deleteProductByModel(String title);
+    void deleteProductById(Long productId);
     Map<String, String> getSpecificationOfProduct(Long productId);
 }
