@@ -54,14 +54,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //todo пересмотреть доступы
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/**", "/auth/").permitAll();
 //                    auth.requestMatchers("/auth/**", "/api/v1/products/filters", "/api/v1/products/all_products").permitAll();
-                    // todo ограничить доступ к функциям админа
 //                    auth.requestMatchers("/admin/**", "/user/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("USER"); //todo пересмотреть доступы
+                    auth.requestMatchers("/user/**").hasAnyRole("USER");
                     auth.anyRequest().authenticated();
                 });
         http.oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));

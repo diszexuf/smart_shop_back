@@ -1,7 +1,6 @@
 package ru.diszexuf.webshop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -22,6 +21,7 @@ public class Role implements GrantedAuthority {
 
     @NonNull
     private String authority;
+
 
     public Role() {
         super();
